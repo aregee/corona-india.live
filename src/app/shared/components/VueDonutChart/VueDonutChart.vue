@@ -1,38 +1,47 @@
 <template>
   <figure :class="$style.vueDonutChart">
-    <vue-headline level="2" :native="false" :class="$style.title"> {{ title }} </vue-headline>
+    <vue-headline level="2" :native="false" :class="$style.title">{{ title }}</vue-headline>
+    <vue-grid>
+      <vue-grid-row>
+        <vue-grid-item>
+          <svg viewBox="0 0 42 42" :aria-label="title" role="img">
+            <circle
+              v-for="(circle, idx) in circles"
+              :key="idx + '' + circle.roundedPercent"
+              :style="{ stroke: circle.color }"
+              :stroke-width="width"
+              cx="21"
+              cy="21"
+              r="15.91549430918952"
+              fill="transparent"
+              :stroke-dasharray="`${circle.percent} ${100 - circle.percent}`"
+              :stroke-dashoffset="getOffset(idx)"
+              :aria-label="circle.label"
+            />
 
-    <svg viewBox="0 0 42 42" :aria-label="title" role="img">
-      <circle
-        v-for="(circle, idx) in circles"
-        :key="idx + '' + circle.roundedPercent"
-        :style="{ stroke: circle.color }"
-        :stroke-width="width"
-        cx="21"
-        cy="21"
-        r="15.91549430918952"
-        fill="transparent"
-        :stroke-dasharray="`${circle.percent} ${100 - circle.percent}`"
-        :stroke-dashoffset="getOffset(idx)"
-        :aria-label="circle.label"
-      ></circle>
-
-      <g :class="$style.text" v-if="type === 'donut'">
-        <text x="50%" y="50%" :class="$style.sum">{{ sum }}</text>
-        <text x="50%" y="50%" :class="$style.label">{{ unit }}</text>
-      </g>
-    </svg>
-
-    <figcaption>
-      <ul aria-hidden="true" role="presentation">
-        <li v-for="(circle, idx) in circles.reverse()" :key="idx">
-          <span :style="{ background: circle.color }"></span> {{ circle.roundedPercent }}% - {{ circle.label }} ({{
-            circle.value
-          }}
-          {{ unit }})
-        </li>
-      </ul>
-    </figcaption>
+            <g :class="$style.text" v-if="type === 'donut'">
+              <text x="50%" y="50%" :class="$style.sum">{{ sum }}</text>
+              <text x="50%" y="50%" :class="$style.label">{{ unit }}</text>
+            </g>
+          </svg>
+        </vue-grid-item>
+      </vue-grid-row>
+      <vue-grid-row>
+        <vue-grid-item>
+          <figcaption>
+            <ul aria-hidden="true" role="presentation">
+              <li v-for="(circle, idx) in circles.reverse()" :key="idx">
+                <span :style="{ background: circle.color }"></span>
+                {{ circle.roundedPercent }}% - {{ circle.label }} ({{
+                circle.value
+                }}
+                {{ unit }})
+              </li>
+            </ul>
+          </figcaption>
+        </vue-grid-item>
+      </vue-grid-row>
+    </vue-grid>
   </figure>
 </template>
 
@@ -40,12 +49,15 @@
 import { getIntInRange } from '@vuesion/utils/dist/randomGenerator';
 import { IChartDataItem } from './IChartDataItem';
 import VueHeadline from '../VueHeadline/VueHeadline.vue';
+import VueGrid from '../VueGrid/VueGrid.vue';
+import VueGridRow from '../VueGridRow/VueGridRow.vue';
+import VueGridItem from '../VueGridItem/VueGridItem.vue';
 
 let usedColors: string[] = [];
 
 export default {
   name: 'VueDonutChart',
-  components: { VueHeadline },
+  components: { VueHeadline, VueGrid, VueGridItem, VueGridRow },
   props: {
     title: {
       type: String,
@@ -90,7 +102,8 @@ export default {
     },
   },
   methods: {
-    getRandomColor /* istanbul ignore next */() {
+    getRandomColor() {
+      /* istanbul ignore next */
       const color = this.$style[`color${getIntInRange(1, this.colorCount)}`];
 
       if (usedColors.indexOf(color) === -1) {
@@ -122,22 +135,29 @@ export default {
 
 <style lang="scss" module>
 @import '~@/app/shared/design-system';
-
 .vueDonutChart {
   position: relative;
   display: block;
 
   svg {
-    width: 50%;
+    width: 100%;
     display: inline-block;
     border-radius: 50%;
+    @include mediaMin(tabletPortrait) {
+      width: 50%;
+    }
   }
 
   figcaption {
-    position: absolute;
+    position: relative;
     right: 0;
-    top: 50%;
+    top: 1em;
     transform: translate(0, -40%);
+    @include mediaMin(tabletPortrait) {
+      position: absolute;
+      right: 0;
+      top: 50%;
+    }
 
     ul {
       list-style: none;
@@ -173,7 +193,7 @@ export default {
 }
 
 .sum {
-  font-size: 0.6em;
+  font-size: 0.5em;
   line-height: 1;
   text-anchor: middle;
   transform: translateY(-0.25em);

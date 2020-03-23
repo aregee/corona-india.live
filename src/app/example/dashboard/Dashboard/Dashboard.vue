@@ -1,43 +1,20 @@
 <template>
   <div :class="$style.dashboard">
     <vue-grid>
-      <vue-breadcrumb :items="[{ label: 'Home', href: '/' }, { label: 'VueX Example' }]" />
-      <vue-grid-row>
+      <vue-breadcrumb :items="[{ label: 'Home', href: '/' }, { label: 'Dashboard' }]" />
+            <vue-grid-row>
         <vue-grid-item fill>
-          <vue-headline level="1">Dashboard</vue-headline>
-          This demo demonstrates the authentication and re-authentication flow.
-          <br />
-          <strong>Make sure to open the console to see the whole flow.</strong>
+          <vue-headline level="5">2019 Novel Coronavirus Visual Dashboard</vue-headline>
+           Operated by the Johns Hopkins University Center for Systems Science and Engineering (JHU CSSE)
           <br />
           <br />
+          <iframe style="height:100vh" src="https://www.arcgis.com/apps/opsdashboard/index.html#/85320e2ea5424dfaaa75ae62e5c06e61" frameborder="0" width="100%" height="800px"></iframe>
         </vue-grid-item>
-
-        <vue-grid-item>
-          Press this&nbsp;&nbsp;&nbsp;&nbsp;<vue-button outlined @click="onClick">button</vue-button>
-          and the following will happen:
+        </vue-grid-row>
+        <!-- <home-section> 
 
           <br />
-          <br />
-
-          <ul>
-            <li>We will try to fetch data 10 times from our example endpoint <code>/protected</code></li>
-            <li>
-              The endpoint will return error-code 401 for not authenticated (which is the same as sending an expired
-              accessToken)
-            </li>
-            <li>
-              The HttpService will handle the error and try to refresh the accessToken.
-              <ul>
-                <li>if an error occurs (random) during the refresh you will be logged out</li>
-                <li>
-                  if the refresh works your accessToken will change the value to <code>accessToken2</code> and the
-                  request will be repeated.
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </vue-grid-item>
-      </vue-grid-row>
+        </home-section> -->
     </vue-grid>
   </div>
 </template>
@@ -48,6 +25,7 @@ import VueGridItem from '@components/VueGridItem/VueGridItem.vue';
 import VueButton from '@components/VueButton/VueButton.vue';
 import VueGridRow from '@components/VueGridRow/VueGridRow.vue';
 import VueHeadline from '@components/VueHeadline/VueHeadline.vue';
+import HomeSection from '@/app/home/components/HomeSection/HomeSection.vue';
 import { HttpService } from '@shared/services/HttpService/HttpService';
 import VueBreadcrumb from '@components/VueBreadcrumb/VueBreadcrumb.vue';
 
@@ -61,6 +39,7 @@ export default {
     VueGridItem,
     VueButton,
     VueGridRow,
+    HomeSection,
     VueHeadline,
   },
   data(): any {

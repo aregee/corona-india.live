@@ -3,9 +3,9 @@
     <vue-grid>
       <vue-grid-row :class="[flip ? $style.flip : null]">
         <vue-grid-item :class="$style.image">
-          <vue-image :src="image" :native="false" :class="$style.image" />
+          <slot name="left" />
         </vue-grid-item>
-        <vue-grid-item :class="$style.text"><slot /></vue-grid-item>
+        <vue-grid-item :class="$style.text"><slot name="right" /></vue-grid-item>
       </vue-grid-row>
     </vue-grid>
   </div>
@@ -23,7 +23,7 @@ export default {
   props: {
     image: {
       type: String,
-      required: true,
+      required: false,
     },
     alternative: {
       type: Boolean,
@@ -57,10 +57,8 @@ export default {
 }
 
 .image {
-  min-height: 256px;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 50%;
+  min-height: auto;
+  max-height: 120vh;
   margin-bottom: $space-32;
 
   @include mediaMin(tabletPortrait) {

@@ -6,7 +6,7 @@
       <vue-grid-row>
         <vue-grid-item class="vueGridItem">
           <img src="logo.png" alt="vuesion" />
-          <vue-headline level="1">vuesion</vue-headline>
+          <vue-headline level="1">Covid-19</vue-headline>
           <div :class="$style.subTitle">
             {{
               $t(
@@ -15,17 +15,6 @@
             }}
           </div>
 
-          <br />
-
-          <a
-            :class="$style.github"
-            href="https://github.com/vuesion/vuesion"
-            target="_blank"
-            rel="noopener"
-            aria-label="vuesion github repository"
-          >
-            <vue-icon-github />
-          </a>
         </vue-grid-item>
       </vue-grid-row>
     </vue-grid>
@@ -88,7 +77,7 @@ export default {
 @import '~@/app/shared/design-system';
 
 .stage {
-  min-height: 100vh;
+  min-height: 50vh;
   overflow: hidden;
   position: relative;
   text-align: center;
@@ -113,7 +102,7 @@ export default {
 }
 
 .canvas {
-  min-height: 100vh;
+  min-height: 50vh;
   width: 100%;
   position: absolute;
   background-color: transparent;
@@ -122,24 +111,6 @@ export default {
 
   @include mediaMin(tabletPortrait) {
     min-height: 50vh;
-  }
-}
-
-.github {
-  font-size: $font-size-h1;
-  display: inline-block;
-  background: $brand-bg-color;
-  transition: $button-transition;
-  transition-property: box-shadow, background-color;
-  color: $brand-link-color;
-
-  &:hover {
-    box-shadow: $button-active-shadow;
-  }
-
-  i {
-    height: $font-size-h1;
-    width: $font-size-h1;
   }
 }
 </style>

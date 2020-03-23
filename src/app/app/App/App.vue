@@ -4,14 +4,20 @@
 
     <vue-navigation-progress :is-navigating="isNavigating" />
 
-    <vue-nav-bar>
-      <vue-button slot="right" v-if="isAuthenticated === false" color="primary" @click="showLoginModal = true">
-        Login
-      </vue-button>
-
-      <vue-button slot="right" v-if="isAuthenticated" color="primary" @click="onLogout">
-        Logout
-      </vue-button>
+    <vue-nav-bar style="background: #ececee">
+      <nav slot="right">
+        <span>Covid-19</span>
+        <img src="logo.png" alt="" width="30px" style="vertical-align:middle">
+        <!-- <ul>
+        <li><vue-button as="router-link" color="default" target="/world-stats" ghost>World</vue-button></li>
+        <li>
+        <vue-button as="router-link" color="default" target="/india-stats" ghost>Anchor</vue-button>
+        <ul class="dropdown">
+          <vue-button as="router-link" color="default" target="/example/dashboard" ghost>Overview</vue-button>
+        </ul>
+      </li>
+      </ul> -->
+      </nav>
     </vue-nav-bar>
 
     <router-view :class="$style.content" />
@@ -34,78 +40,56 @@
         </vue-sidebar-group-item>
       </vue-sidebar-group>
 
-      <vue-sidebar-group title="Navigation">
-        <vue-sidebar-group-item to="/">
-          <vue-icon-code />
-          Home
+      <vue-sidebar-group title="World">
+        <vue-sidebar-group-item to="/world/Dashboard">
+          <vue-icon-globe />
+          World Dashboard
         </vue-sidebar-group-item>
 
-        <vue-sidebar-group-item :to="{ name: 'counter' }">
-          <vue-icon-hashtag />
-          VueX Example
+        <vue-sidebar-group-item :to="{ name: 'worldstats' }">
+          <vue-icon-barchart />
+          Statistics
         </vue-sidebar-group-item>
 
-        <vue-sidebar-group-item :to="{ name: 'form' }">
-          <vue-icon-hashtag />
-          Form Example
+        <vue-sidebar-group-item>
+          <vue-icon-headlines />
+          Recent News
         </vue-sidebar-group-item>
       </vue-sidebar-group>
 
-      <vue-sidebar-group title="Documentation">
-        <vue-sidebar-group-item>
-          <a href="https://vuesion.github.io/docs/en/">
-            <vue-icon-book />
-            Documentation
-          </a>
+      <vue-sidebar-group title="India">
+        <vue-sidebar-group-item to="/india/dashboard">
+          <vue-icon-globe />
+          India Dashboard
+        </vue-sidebar-group-item>
+
+        <vue-sidebar-group-item :to="{ name: 'indiastats' ,  params: {state: 'Maharashtra'} }">
+          <vue-icon-barchart />
+          Statistics
         </vue-sidebar-group-item>
 
         <vue-sidebar-group-item>
-          <a href="/storybook/?path=/story/design-system-design-system--intro">
-            <vue-icon-book />
-            Design System
-          </a>
-        </vue-sidebar-group-item>
-
-        <vue-sidebar-group-item>
-          <a href="/storybook/?path=/story/atoms-badge--badge-variants">
-            <vue-icon-puzzle-piece />
-            Components
-          </a>
+          <vue-icon-headlines />
+          Recent News
         </vue-sidebar-group-item>
       </vue-sidebar-group>
 
       <vue-sidebar-group title="Community">
         <vue-sidebar-group-item>
-          <a href="https://github.com/vuesion/vuesion" target="_blank" rel="noopener">
+          <a href="https://github.com/aregee" target="_blank" rel="noopener">
             <vue-icon-github />
             Github
           </a>
         </vue-sidebar-group-item>
 
         <vue-sidebar-group-item>
-          <a href="https://discord.gg/59x5cg2" target="_blank" rel="noopener"> Discord </a>
-        </vue-sidebar-group-item>
-
-        <vue-sidebar-group-item>
-          <a href="https://slack-vuesion.herokuapp.com/" target="_blank" rel="noopener"> Slack </a>
-        </vue-sidebar-group-item>
-
-        <vue-sidebar-group-item>
-          <a href="https://chat.vuejs.org/" target="_blank" rel="noopener"> VueLand </a>
-        </vue-sidebar-group-item>
-
-        <vue-sidebar-group-item>
-          <a href="https://twitter.com/vuesion1" target="_blank" rel="noopener">
+          <a href="https://twitter.com/iamaregee" target="_blank" rel="noopener">
             <vue-icon-twitter-square />
             Twitter
           </a>
         </vue-sidebar-group-item>
       </vue-sidebar-group>
     </vue-sidebar>
-
-    <vue-modal :show="showLoginModal" @close="showLoginModal = false">
-      <login-form :loading="isLoginPending" @submit="onLoginSubmit" />
-    </vue-modal>
   </div>
 </template>
 
@@ -123,14 +107,15 @@ import VueNavigationProgress from '@components/VueNavigationProgress/VueNavigati
 import VueSidebar from '@components/VueSidebar/VueSidebar.vue';
 import VueSidebarGroup from '@components/VueSidebar/VueSidebarGroup/VueSidebarGroup.vue';
 import VueSidebarGroupItem from '@components/VueSidebar/VueSidebarGroupItem/VueSidebarGroupItem.vue';
-import VueIconCode from '@components/icons/VueIconCode/VueIconCode.vue';
-import VueIconBook from '@components/icons/VueIconBook/VueIconBook.vue';
-import VueIconHashtag from '@components/icons/VueIconHashtag/VueIconHashtag.vue';
+import VueIconGlobe from '@components/icons/VueIconGlobe/VueIconGlobe.vue';
+import VueIconBarchart from '@components/icons/VueIconBarchart/VueIconBarchart.vue';
+import VueIconHeadlines from '@components/icons/VueIconHeadlines/VueIconHeadlines.vue';
 import VueIconGithub from '@components/icons/VueIconGithub/VueIconGithub.vue';
 import VueIconTwitterSquare from '@components/icons/VueIconTwitterSquare/VueIconTwitterSquare.vue';
 import VueSelect from '@components/VueSelect/VueSelect.vue';
 import VueIconPuzzlePiece from '@components/icons/VueIconPuzzlePiece/VueIconPuzzlePiece.vue';
 import VueButton from '@components/VueButton/VueButton.vue';
+import VueDropdownMenu from '@components/VueDropdownMenu/VueDropdownMenu.vue';
 import VueModal from '@components/VueModal/VueModal.vue';
 import LoginForm from '@shared/modules/auth/LoginForm/LoginForm.vue';
 import { addNotification } from '@components/VueNotificationStack/utils';
@@ -145,9 +130,9 @@ export default {
     VueSelect,
     VueIconTwitterSquare,
     VueIconGithub,
-    VueIconHashtag,
-    VueIconBook,
-    VueIconCode,
+    VueIconGlobe,
+    VueIconHeadlines,
+    VueIconBarchart,
     VueSidebarGroupItem,
     VueSidebarGroup,
     VueSidebar,
@@ -158,6 +143,7 @@ export default {
     VueGridItem,
     VueFooter,
     VueNotificationStack,
+    VueDropdownMenu,
   },
   data(): any {
     return {
@@ -244,5 +230,59 @@ export default {
   top: $space-4;
   width: $space-24;
   height: $space-24;
+}
+nav {
+  ul {
+  background: $brand-primary;
+  list-style: none;
+  // margin: 0;
+  // color: #fff;
+  // padding-left: 0;
+}
+
+li {
+    // color: black;
+    // background: $brand-primary;
+    display: block;
+    float: left;
+    // padding: 1rem;
+    position: relative;
+    text-decoration: none;
+    transition-duration: 0.5s;
+}
+  
+li a {
+  color: black;
+}
+
+li:hover {
+  background: $brand-primary;
+  cursor: pointer;
+}
+
+ul li ul {
+  background: $brand-primary;
+  visibility: hidden;
+  // color: black;
+  opacity: 0;
+  // min-width: 5rem;
+  position: absolute;
+  transition: all 0.5s ease;
+  // margin-top: 1rem;
+  // left: 0;
+  display: none;
+}
+
+ul li:hover > ul,
+ul li ul:hover {
+  visibility: visible;
+  opacity: 1;
+  display: block;
+}
+
+ul li ul li {
+  clear: both;
+  width: 100%;
+}
 }
 </style>
