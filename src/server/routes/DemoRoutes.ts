@@ -19,6 +19,7 @@ export const DemoRoutes = (app: Express.Application) => {
       next();
     }
   });
+
   app.use('/storybook', serve('../../storybook-static'));
   app.use('/docs', (req: Request, res: Response) => {
     res.status(301).redirect('https://vuesion.github.io/docs/en/');

@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import Vue from 'vue';
+import 'cross-fetch/polyfill';
 import VueI18n from 'vue-i18n';
 import { Store } from 'vuex';
 import { Route } from 'vue-router';
