@@ -12,3 +12,5 @@ storybook-static
 logs
 .cache
 .vscode/
+
+.now
